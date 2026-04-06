@@ -82,11 +82,15 @@ def print_sources(response):
 
     for i, node in enumerate(source_nodes, start=1):
         metadata = node.node.metadata or {}
-        file_name = metadata.get("file_name", "未知文件")
+        page_title = metadata.get("page_title", "未知标题")
+        source_url = metadata.get("source_url", "")
+        source_file = metadata.get("source_file", metadata.get("file_name", "未知文件"))
         score = getattr(node, "score", None)
         text = node.node.get_text().strip().replace("\n", " ")
 
-        print(f"\n[{i}] 文件: {file_name}")
+        print(f"\n[{i}] 标题: {page_title}")
+        print(f"链接: {source_url or '未知链接'}")
+        print(f"来源文件: {source_file}")
         if score is not None:
             print(f"相似度分数: {score:.4f}")
         print(f"片段: {text[:300]}...")
